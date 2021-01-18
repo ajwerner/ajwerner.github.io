@@ -20,9 +20,10 @@
 <script>
   async function doRender() {
     const body = d3.select("body").node();
-    const urlParams = new URLSearchParams(window.location.search);
-    const graph = urlParams.get('graph');
-    console.log(graph);
+    if (!window.location.hash) {
+      return;
+    }
+    const graph = window.location.hash.substring(1);
     const data = await fetch(`data:application/octet-stream;charset=utf-8;base64,${graph}`);
     const blob = await data.blob();
     const ab = await blob.arrayBuffer();
